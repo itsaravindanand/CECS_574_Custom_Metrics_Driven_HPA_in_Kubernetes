@@ -1,0 +1,85 @@
+API Call 1: Create a task
+Mapping: POST
+URL: http://localhost:8080/tasks
+Request JSON:
+{
+    "name": "Task",
+    "sleepTime": 30000
+}
+Response JSON: 200 with this body
+{
+    "id": 69,
+    "name": "Task",
+    "status": "READY",
+    "sleepTime": 30000
+}
+
+API Call 2: Get the list of all tasks from the table
+Mapping: GET
+URL: http://localhost:8080/tasks
+Request JSON: N/A
+Response JSON: 200 with this body
+[
+{
+"id": 1,
+"name": "Task",
+"status": "COMPLETED",
+"sleepTime": 30000
+},
+{
+"id": 2,
+"name": "Task",
+"status": "COMPLETED",
+"sleepTime": 30000
+},
+{
+"id": 3,
+"name": "Task",
+"status": "COMPLETED",
+"sleepTime": 30000
+},
+{
+"id": 4,
+"name": "Task",
+"status": "COMPLETED",
+"sleepTime": 30000
+},
+{
+"id": 5,
+"name": "Task",
+"status": "COMPLETED",
+"sleepTime": 30000
+},
+{
+"id": 6,
+"name": "Task",
+"status": "COMPLETED",
+"sleepTime": 30000
+},
+{
+"id": 7,
+"name": "Task",
+"status": "COMPLETED",
+"sleepTime": 30000
+},
+{
+"id": 8,
+"name": "Task",
+"status": "COMPLETED",
+"sleepTime": 30000
+},
+{
+"id": 9,
+"name": "Task",
+"status": "COMPLETED",
+"sleepTime": 30000
+}
+]
+
+
+API Call 3: Get the Queue_Length Metric
+Mapping: GET
+URL: http://localhost:8080/tasks/queue-length
+Request JSON: N/A
+Response JSON: 200 with body
+0.0 //It will be a float number.

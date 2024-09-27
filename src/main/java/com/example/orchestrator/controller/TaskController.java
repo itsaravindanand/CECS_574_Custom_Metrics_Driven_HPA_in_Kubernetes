@@ -1,0 +1,152 @@
+package com.example.orchestrator.controller;
+
+import com.example.orchestrator.repository.TaskRepository;
+import com.example.orchestrator.task.Task;
+import com.example.orchestrator.task.TaskStatus;
+import io.prometheus.client.Gauge;
+import io.prometheus.client.exporter.HTTPServer;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
+import org.springframework.web.bind.annotation.*;
+
+
+import javax.annotation.PostConstruct;
+import java.io.IOException;
+import java.util.List;
+import java.util.Optional;
+import java.util.concurrent.ScheduledFuture;
+
+@RestController
+@RequestMapping("/tasks")
+public class TaskController {
+    private final TaskRepository taskRepository;
+    HTTPServer server = new HTTPServer(1234);
+    private static final Gauge queueLengthGauge = Gauge.build()
+            .name("queue_length")
+            .help("Queue length gauge.")
+            .labelNames("namespace", "pod")
+            .register();
+
+    @Value("${POD_NAMESPACE:default}")
+    private String namespace;
+
+    @Value("${POD_NAME:default}")
+    private String podName;
+
+    @Value("${queue_length.sleep.time:30000}")
+    private long sleepTime;
+
+    @Value("${task_check_interval:30000}")
+    private long taskCheckInterval;
+
+    private final ThreadPoolTaskScheduler queueLengthScheduler;
+    private final ThreadPoolTaskScheduler taskScheduler;
+    private ScheduledFuture<?> scheduledTask;
+
+    public TaskController(TaskRepository taskRepository) throws IOException {
+        this.taskRepository = taskRepository;
+
+        // Initialize separate schedulers
+        this.queueLengthScheduler = new ThreadPoolTaskScheduler();
+        this.queueLengthScheduler.setPoolSize(1);
+        this.queueLengthScheduler.initialize();
+
+        this.taskScheduler = new ThreadPoolTaskScheduler();
+        this.taskScheduler.setPoolSize(1);
+        this.taskScheduler.initialize();
+    }
+
+    @PostConstruct
+    public void startQueueLengthUpdater() {
+        scheduleQueueLengthUpdate();
+        processTasks(); // Start processing tasks at initialization
+    }
+
+    // Method to update the queue_length metric
+    public void updateQueueLengthMetric() {
+        List<Task> readyTasks = taskRepository.findByStatus(TaskStatus.READY);
+        System.out.println("Ready Tasks Count: " + readyTasks.size());
+        queueLengthGauge.labels(namespace, podName).set(readyTasks.size());
+        System.out.println("Guage " + queueLengthGauge.labels(namespace, podName).get());
+    }
+
+    // Method to dynamically schedule the queue_length updates
+    private void scheduleQueueLengthUpdate() {
+        scheduledTask = queueLengthScheduler.scheduleWithFixedDelay(() -> {
+            try {
+                updateQueueLengthMetric();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }, sleepTime);
+    }
+
+    // REST endpoint to create a task
+    @PostMapping
+    public Task createTask(@RequestBody Task task) {
+        task.setStatus(TaskStatus.READY);
+        return taskRepository.save(task);
+    }
+
+    // REST endpoint to get the current queue length
+    @GetMapping("/queue-length")
+    public double getQueueLength() {
+        return queueLengthGauge.labels(namespace, podName).get();
+    }
+
+    //REST endpoint to get all tasks in the table
+    @GetMapping
+    public List<Task> getAllTasks() {
+        return taskRepository.findAll();
+    }
+
+    // REST endpoint to complete a task
+    @PutMapping("/complete-task/{id}")
+    public Task completeTask(@PathVariable Long id) {
+        Task task = taskRepository.findById(id).orElseThrow();
+        task.setStatus(TaskStatus.COMPLETED);
+        return taskRepository.save(task);
+    }
+
+
+
+    // REST endpoint to allow dynamic updating of sleep time
+    @PutMapping("/update-sleep-time/{time}")
+    public String updateSleepTime(@PathVariable long time) {
+        this.sleepTime = time;
+        if (scheduledTask != null) {
+            scheduledTask.cancel(false);  // Cancel the previous task
+        }
+        scheduleQueueLengthUpdate();  // Reschedule with the new sleep time
+        return "Sleep time updated to " + sleepTime + " milliseconds";
+    }
+
+
+
+    // Method to process the tasks
+    public void processTasks() {
+        taskScheduler.scheduleWithFixedDelay(() -> {
+            try {
+                // Fetch one ready task
+                Optional<Task> optionalTask = taskRepository.findFirstByStatus(TaskStatus.READY);
+                if (optionalTask.isPresent()) {
+                    Task task = optionalTask.get(); // Get the Task object
+
+                    // Mark the task as in-progress
+                    task.setStatus(TaskStatus.IN_PROGRESS);
+                    taskRepository.save(task);
+
+                    // Simulate task processing by waiting for the configured sleep time
+                    Thread.sleep(task.getSleepTime()); // Sleep time for task processing
+
+                    // Mark task as completed
+                    task.setStatus(TaskStatus.COMPLETED);
+                    taskRepository.save(task);
+                }
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+                e.printStackTrace();
+            }
+        }, taskCheckInterval);  // The frequency for checking ready tasks
+    }
+}
