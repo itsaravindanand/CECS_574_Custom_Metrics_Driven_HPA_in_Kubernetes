@@ -15,7 +15,7 @@ Open the application from the repository in your IDE.
 
 ### Step 2: Start the MySQL Server in Docker
 
-Run the following command to start MySQL Server in Docker:
+Execute the following command to start MySQL Server in Docker:
 
 ```bash
 docker run --name mysql-container -e MYSQL_ROOT_PASSWORD=my-secret-pw -e MYSQL_DATABASE=tdc-test -e MYSQL_USER=tdc-user -e MYSQL_PASSWORD=tdc-pw -p 3307:3306 -d mysql:8-oracle
