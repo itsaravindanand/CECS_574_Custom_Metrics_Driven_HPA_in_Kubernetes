@@ -61,19 +61,29 @@ kubectl apply -f ./k8s/orchestrator.yaml
 
 Verify the running pods and services with these commands:
 
+Get all active pods
 ```bash
 kubectl get pods
+```
+Get all active services
+```bash
 kubectl get svc
 ```
 
 ### Step 9: Port-Forward the Containers
 
 Port-forward the containers for API calls and the Prometheus HTTP server:
-
+API calls service
 ```bash
-kubectl port-forward svc/orchestrator-metrics 1234:1234
 kubectl port-forward svc/orchestrator-service 8080:8080
 ```
+
+Metrics Service
+```bash
+kubectl port-forward svc/orchestrator-metrics 1234:1234
+```
+
+
 
 ### Step 10: Setting Up Prometheus
 
