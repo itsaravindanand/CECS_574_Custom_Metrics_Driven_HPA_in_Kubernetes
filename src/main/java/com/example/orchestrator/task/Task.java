@@ -2,6 +2,9 @@ package com.example.orchestrator.task;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
+
 @Entity
 public class Task {
     @Id
@@ -13,7 +16,10 @@ public class Task {
     @Enumerated(EnumType.STRING) // To store enum as String in DB
     private TaskStatus status; // Enum for "ready", "in-progress", "completed"
 
-    private int sleepTime;
+    private int taskTime;
+
+    @Column(columnDefinition = "TIMESTAMP(0)")
+    private LocalDateTime created_time = LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS);;
 
     public Long getId() {
         return id;
@@ -39,12 +45,20 @@ public class Task {
         this.status = status;
     }
 
-    public int getSleepTime() {
-        return sleepTime;
+    public int getTaskTime() {
+        return taskTime;
     }
 
-    public void setSleepTime(int sleepTime) {
-        this.sleepTime = sleepTime;
+    public void setTaskTime(int sleepTime) {
+        this.taskTime = sleepTime;
+    }
+
+    public LocalDateTime getCreated_time() {
+        return created_time;
+    }
+
+    public void setCreated_time(LocalDateTime created_time) {
+        this.created_time = created_time;
     }
 }
 

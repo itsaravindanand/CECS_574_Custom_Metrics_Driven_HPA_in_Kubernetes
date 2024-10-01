@@ -1,4 +1,5 @@
 com\example\orchestrator\repository\TaskRepository.class
+com\example\orchestrator\OrchestratorApplication$1.class
 com\example\orchestrator\OrchestratorApplication.class
 com\example\orchestrator\task\Task.class
 com\example\orchestrator\controller\TaskController.class

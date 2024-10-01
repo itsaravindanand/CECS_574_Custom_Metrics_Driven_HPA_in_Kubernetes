@@ -6,6 +6,7 @@ import com.example.orchestrator.task.TaskStatus;
 import io.prometheus.client.Gauge;
 import io.prometheus.client.exporter.HTTPServer;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 import org.springframework.web.bind.annotation.*;
 
@@ -33,9 +34,11 @@ public class TaskController {
     @Value("${POD_NAME:default}")
     private String podName;
 
-    @Value("${queue_length.sleep.time:30000}")
-    private long sleepTime;
+    //frequency of updating the metrics
+    @Value("${queue_length_check_interval:30000}")
+    private long metricCheckInterval;
 
+    //frequency of checking the tasks queue to process task
     @Value("${task_check_interval:30000}")
     private long taskCheckInterval;
 
@@ -78,7 +81,7 @@ public class TaskController {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        }, sleepTime);
+        }, metricCheckInterval);
     }
 
     // REST endpoint to create a task
@@ -108,17 +111,34 @@ public class TaskController {
         return taskRepository.save(task);
     }
 
+    // REST endpoint to complete a task
+    @PutMapping("/reschedule-task/{id}")
+    public Task rescheduleTask(@PathVariable Long id) {
+        Task task = taskRepository.findById(id).orElseThrow();
+        task.setStatus(TaskStatus.READY);
+        return taskRepository.save(task);
+    }
 
+    // REST endpoint to delete a task by its ID
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteTask(@PathVariable Long id) {
+        if (taskRepository.existsById(id)) {
+            taskRepository.deleteById(id);
+            return ResponseEntity.ok("Task with ID " + id + " has been deleted.");
+        } else {
+            return ResponseEntity.status(404).body("Task with ID " + id + " not found.");
+        }
+    }
 
     // REST endpoint to allow dynamic updating of sleep time
     @PutMapping("/update-sleep-time/{time}")
     public String updateSleepTime(@PathVariable long time) {
-        this.sleepTime = time;
+        this.metricCheckInterval = time;
         if (scheduledTask != null) {
             scheduledTask.cancel(false);  // Cancel the previous task
         }
         scheduleQueueLengthUpdate();  // Reschedule with the new sleep time
-        return "Sleep time updated to " + sleepTime + " milliseconds";
+        return "Sleep time updated to " + metricCheckInterval + " milliseconds";
     }
 
 
@@ -137,7 +157,7 @@ public class TaskController {
                     taskRepository.save(task);
 
                     // Simulate task processing by waiting for the configured sleep time
-                    Thread.sleep(task.getSleepTime()); // Sleep time for task processing
+                    Thread.sleep(task.getTaskTime()); // Sleep time for task processing
 
                     // Mark task as completed
                     task.setStatus(TaskStatus.COMPLETED);
