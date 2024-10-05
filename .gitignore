@@ -87,7 +87,3 @@ node_modules/
 *.project
 *.classpath
 *.cproject
-
-# Ignore Dockerfile and other configuration files
-Dockerfile
-*.dockerignore

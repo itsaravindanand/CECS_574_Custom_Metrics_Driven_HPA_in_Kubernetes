@@ -122,7 +122,7 @@ public class TaskController {
         }
     }
 
-    // Unused Endpoints
+    // Other Endpoints
     // REST endpoint to complete a task
     @PutMapping("/complete-task/{id}")
     public Task completeTask(@PathVariable Long id) {
