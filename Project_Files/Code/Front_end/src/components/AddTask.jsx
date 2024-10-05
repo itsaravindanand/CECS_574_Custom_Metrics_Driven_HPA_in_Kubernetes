@@ -76,7 +76,7 @@ export default function AddTask() {
         })
         .then((data) => {
           console.log(data);
-          //Keeps the data entered in the text fields after submission as well
+          // Keeps the data entered in the text fields after submission as well
           //   setTaskName(""); // Reset the task name
           //   setTaskProcessingTime(""); // Reset the processing time
           fetchTasks(); // Refresh the task list

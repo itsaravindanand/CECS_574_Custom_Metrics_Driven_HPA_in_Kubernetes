@@ -122,26 +122,6 @@ public class TaskController {
         }
     }
 
-    // Other Endpoints
-    // REST endpoint to complete a task
-    @PutMapping("/complete-task/{id}")
-    public Task completeTask(@PathVariable Long id) {
-        Task task = taskRepository.findById(id).orElseThrow();
-        task.setStatus(TaskStatus.COMPLETED);
-        return taskRepository.save(task);
-    }
-
-    // REST endpoint to allow dynamic updating of sleep time
-    @PutMapping("/update-sleep-time/{time}")
-    public String updateSleepTime(@PathVariable long time) {
-        this.metricCheckInterval = time;
-        if (scheduledTask != null) {
-            scheduledTask.cancel(false);  // Cancel the previous task
-        }
-        scheduleQueueLengthUpdate();  // Reschedule with the new sleep time
-        return "Sleep time updated to " + metricCheckInterval + " milliseconds";
-    }
-
     // Method to process the tasks
     public void processTasks() {
         taskScheduler.scheduleWithFixedDelay(() -> {
