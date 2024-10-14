@@ -101,6 +101,13 @@ kubectl get cm
 
 Install Prometheus using Helm:
 
+Update Helm Repository
+
+```bash
+helm repo update
+```
+
+Install Prometheus:
 ```bash
 helm install prometheus prometheus-community/prometheus -f ./k8s/prom-values.yaml
 ```
