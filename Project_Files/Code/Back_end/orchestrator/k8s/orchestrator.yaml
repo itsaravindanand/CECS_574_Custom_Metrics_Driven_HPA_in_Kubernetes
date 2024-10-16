@@ -28,7 +28,7 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: metadata.name
-            - name: queue_length.sleep.time
+            - name: queue_length_check_interval
               value: "1000"
             - name: task_check_interval
               value: "1000"

@@ -19,11 +19,11 @@ spec:
           averageValue: 1
   behavior:
     scaleDown:
-      stabilizationWindowSeconds: 30  # Reduced stabilization window for quicker scale down
+      stabilizationWindowSeconds: 30
       policies:
         - type: Pods
-          value: 2  # Allow a faster scale down (scale down by 1 pod immediately)
+          value: 2
           periodSeconds: 15
         - type: Percent
-          value: 50  # This can remain at 100 for aggressive scaling down
+          value: 50
           periodSeconds: 15
