@@ -41,6 +41,12 @@ Create a cluster using the following command:
 kind create cluster
 ```
 
+Check cluster using the following command:
+
+```bash
+kind get clusters
+```
+
 ### Step 6: Load the Docker Image of the Java Application into the Cluster
 
 Load the Docker image into the cluster with the following command:
