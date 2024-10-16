@@ -194,9 +194,13 @@ npm start
 
 ### React Application Screenshots:
 
-Check the custom metric and add tasks to the orchestrator:
+#### Check the custom metric and add tasks to the orchestrator:
 
-Manage Tasks
+![Custom_Metric_and_Add_Task](https://raw.githubusercontent.com/itsaravindanand/CECS_574_Custom_Metrics_Driven_HPA_in_Kubernetes/refs/heads/main/Project_Files/Documentation/Screenshots/Checking_Custom_Metric_and_add_task.png)
+
+#### Manage Tasks:
+
+![Bug_Report_Template](https://github.com/itsaravindanand/CECS544_Project_Bughound/blob/main/BugHound_Application/Screenshots/Bug_Report_Template.png)
 
 ### HPA Behavior on the changes
 
