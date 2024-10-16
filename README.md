@@ -196,15 +196,24 @@ npm start
 
 #### Check the custom metric and add tasks to the orchestrator:
 
-![Custom_Metric_and_Add_Task](https://raw.githubusercontent.com/itsaravindanand/CECS_574_Custom_Metrics_Driven_HPA_in_Kubernetes/refs/heads/main/Project_Files/Documentation/Screenshots/Checking_Custom_Metric_and_add_task.png)
+![Custom_Metric_and_Add_Task](https://github.com/itsaravindanand/CECS_574_Custom_Metrics_Driven_HPA_in_Kubernetes/blob/main/Project_Files/Documentation/Screenshots/Checking_Custom_Metric_and_add_task.png)
 
 #### Manage Tasks:
 
-![Bug_Report_Template](https://github.com/itsaravindanand/CECS544_Project_Bughound/blob/main/BugHound_Application/Screenshots/Bug_Report_Template.png)
+![Task_Queue](https://github.com/itsaravindanand/CECS_574_Custom_Metrics_Driven_HPA_in_Kubernetes/blob/main/Project_Files/Documentation/Screenshots/Task_Queue.png)
 
-### HPA Behavior on the changes
+### Kubernetes Logs Screenshots
 
+#### Describe HPA:
 
+The HPA has scaled up and down based on the queue_length value
 
+![Describe_HPA](https://github.com/itsaravindanand/CECS_574_Custom_Metrics_Driven_HPA_in_Kubernetes/blob/main/Project_Files/Documentation/Screenshots/Describe_HPA_Changes.png)
+
+#### Describe Deploy:
+
+The Orchestrator deployment is scaled up and down based on the queue_length value
+
+![Describe_Deploy](https://github.com/itsaravindanand/CECS_574_Custom_Metrics_Driven_HPA_in_Kubernetes/blob/main/Project_Files/Documentation/Screenshots/Describe_Deploy_Changes.png)
 
 
