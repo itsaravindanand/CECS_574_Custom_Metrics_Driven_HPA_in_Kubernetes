@@ -101,10 +101,24 @@ kubectl get cm
 
 Install Prometheus using Helm:
 
+Update Helm Repository
+
+```bash
+helm repo update
+```
+
+Install Prometheus:
 ```bash
 helm install prometheus prometheus-community/prometheus -f ./k8s/prom-values.yaml
 ```
-
+Get all active pods
+```bash
+kubectl get pods
+```
+Get all active services
+```bash
+kubectl get svc
+```
 Port forward the Prometheus service:
 
 ```bash
@@ -117,6 +131,11 @@ Install the Prometheus adapter using Helm with the `prom-adapter-values.yaml` fi
 
 ```bash
 helm install prometheus-adapter prometheus-community/prometheus-adapter -f ./k8s/prom-adapter-values.yaml
+```
+
+Get all active pods
+```bash
+kubectl get pods
 ```
 
 Validate the adapter:
