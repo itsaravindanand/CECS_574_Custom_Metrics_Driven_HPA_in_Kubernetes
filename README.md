@@ -1,5 +1,9 @@
 # CECS_574_Custom_Metrics_Driven_HPA_in_Kubernetes
 
+## Description
+
+This project demonstrates how custom metrics can be used to dynamically scale resources in a Kubernetes environment using the Horizontal Pod Autoscaler (HPA). By leveraging the queue_length metric, the system adjusts the number of replicas based on real-time application workload, allowing for more precise resource scaling. The project implements an orchestrator application, with a ReactJS front end, deployed in Kubernetes and monitored using Prometheus and Prometheus Adapter to provide real-time metric-driven scaling with HPA.
+
 ## Prerequisites
 
 - IntelliJ or Eclipse or Similar to run the Java Spring Boot Application
