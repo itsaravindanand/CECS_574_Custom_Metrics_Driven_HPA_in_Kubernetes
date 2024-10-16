@@ -152,6 +152,12 @@ Set up the HPA using the following command:
 kubectl apply -f ./k8s/hpa.yaml
 ```
 
+Check the HPA using the following command:
+
+```bash
+kubectl get hpa
+```
+
 Check the HPA details:
 
 ```bash
