@@ -2,23 +2,30 @@
 
 ## Prerequisites
 
-- Java
-- IDE - IntelliJ or Eclipse to run the Java Spring Boot Application
+- IntelliJ or Eclipse to run the Java Spring Boot Application
 - Docker
 - Minikube
 
 ## Implementation Steps
 
-### Step 1: Open the Java Spring Boot Application
-
-Open the application from the repository in your IDE.
-
-### Step 2: Start the MySQL Server in Docker
+### Step 1: Start the MySQL Container in Docker
 
 Execute the following command to start MySQL Server in Docker:
 
 ```bash
 docker run --name mysql-container -e MYSQL_ROOT_PASSWORD=my-secret-pw -e MYSQL_DATABASE=tdc-test -e MYSQL_USER=tdc-user -e MYSQL_PASSWORD=tdc-pw -p 3307:3306 -d mysql:8-oracle
+```
+
+### Step 2: Open the Java Spring Boot Application
+
+Open the application from the repository in your IDE.
+
+If required, update the Database Connection details in the application.properties file in the resources folder
+
+```bash
+spring.datasource.url=jdbc:mysql://host.docker.internal:3307/tdc-test
+spring.datasource.username=tdc-user
+spring.datasource.password=tdc-pw
 ```
 
 ### Step 3: Run the Java Application
@@ -27,7 +34,7 @@ Run the Java application and check for errors.
 
 ### Step 4: Build Docker Image Using Dockerfile
 
-Build the Docker image using the following command:
+Build the Docker image using the following command from the root folder of the Orchestrator Project:
 
 ```bash
 docker build -t orchestrator:latest .
@@ -35,7 +42,7 @@ docker build -t orchestrator:latest .
 
 ### Step 5: Create a Cluster
 
-Create a cluster using the following command:
+Create a cluster using this command:
 
 ```bash
 kind create cluster
@@ -63,7 +70,7 @@ Deploy the application using the command below:
 kubectl apply -f ./k8s/orchestrator.yaml
 ```
 
-### Step 8: Check the Pod and Service
+### Step 8: Check the Pods and Services
 
 Verify the running pods and services with these commands:
 
@@ -113,7 +120,7 @@ Update Helm Repository
 helm repo update
 ```
 
-Install Prometheus:
+Install Prometheus using Helm with the `prom-values.yaml` file:
 ```bash
 helm install prometheus prometheus-community/prometheus -f ./k8s/prom-values.yaml
 ```
@@ -152,7 +159,7 @@ kubectl get --raw "/apis/custom.metrics.k8s.io/v1beta1/namespaces/default/pods/*
 
 ### Step 12: Setting Up the Horizontal Pod Autoscaler (HPA)
 
-Set up the HPA using the following command:
+Install HPA using the `hpa.yaml` file:
 
 ```bash
 kubectl apply -f ./k8s/hpa.yaml
@@ -176,6 +183,23 @@ Check the replication actions in the deployment:
 kubectl describe deploy orchestrator-deploy
 ```
 
----
+### Step 13: Run the Application to add tasks:
 
-Follow these steps sequentially to deploy and manage your Java Spring Boot application effectively!
+Download the react application project and run the application with this command:
+
+```bash
+npm start
+```
+
+### React Application Screenshots:
+
+Check the custom metric and add tasks to the orchestrator:
+
+Manage Tasks
+
+### HPA Behavior on the changes
+
+
+
+
+
