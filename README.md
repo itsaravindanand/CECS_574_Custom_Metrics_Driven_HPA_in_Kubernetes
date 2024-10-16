@@ -31,7 +31,7 @@ spring.datasource.password=tdc-pw
 
 ### Step 3: Run the Java Application
 
-Run the Java application and check for errors.
+Run the Java application and perform a maven clean install. This will add the .jar for the application in the target folder.
 
 ### Step 4: Build Docker Image Using Dockerfile
 
