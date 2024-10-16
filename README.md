@@ -2,9 +2,10 @@
 
 ## Prerequisites
 
-- IntelliJ or Eclipse to run the Java Spring Boot Application
+- IntelliJ or Eclipse or Similar to run the Java Spring Boot Application
 - Docker
 - Minikube
+- Visual Studio or Similar to run the ReactJS application
 
 ## Implementation Steps
 
