@@ -2,11 +2,17 @@
 
 ## Steps to Get Started
 
-1. **Download the project** [here!](https://drive.google.com/file/d/1B15u2L4KT7uQgXKm9sBk3SDFdcagwKzQ/view?usp=sharing).
+1. **Download the entire Maven Spring Boot Project** [here](https://drive.google.com/file/d/1B15u2L4KT7uQgXKm9sBk3SDFdcagwKzQ/view?usp=sharing).
    
 2. **Unzip the file**.
 
 3. **Open the project** in your IDE using the `pom.xml` file.
+
+4. **Start the MySQL Container in Docker**, run this command to start the MySQL Container:
+
+```bash
+docker run --name mysql-container -e MYSQL_ROOT_PASSWORD=my-secret-pw -e MYSQL_DATABASE=tdc-test -e MYSQL_USER=tdc-user -e MYSQL_PASSWORD=tdc-pw -p 3307:3306 -d mysql:8-oracle
+```
 
 4. **Update the database connection details** in `src/main/resources/application.properties` if required:
 
