@@ -1,6 +1,6 @@
 # Getting Started with React App
 
-You can download the entire react application [here](https://drive.google.com/file/d/1PfUNVLgk7VA6CG9_qiWlxPChUBR2f-03/view?usp=sharing)
+You can download the entire ReactJS project zip file [here](https://drive.google.com/file/d/1PfUNVLgk7VA6CG9_qiWlxPChUBR2f-03/view?usp=sharing)
 
 ## Available Scripts
 
