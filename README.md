@@ -188,7 +188,7 @@ Check the replication actions in the deployment:
 kubectl describe deploy orchestrator-deploy
 ```
 
-### Step 13: Run the Application to add tasks:
+### Step 13: Run the ReactJS Application to add tasks:
 
 Download the react application project and run the application with this command:
 
