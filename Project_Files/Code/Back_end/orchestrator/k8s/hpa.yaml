@@ -1,12 +1,12 @@
 apiVersion: autoscaling/v2
-kind: HorizontalPodAutoscaler
+kind: HorizontalPodAutoscaler # Defines the resource as a Horizontal Pod Autoscaler
 metadata:
-  name: orchestrator-hpa
+  name: orchestrator-hpa # The name of the HPA resource
 spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: orchestrator-deploy
+    name: orchestrator-deploy # The name of the Deployment to scale
   minReplicas: 1
   maxReplicas: 15
   metrics:
@@ -16,10 +16,10 @@ spec:
           name: queue_length
         target:
           type: AverageValue
-          averageValue: 1
+          averageValue: 1 # The target average value for the metric (e.g., average queue_length should be 1)
   behavior:
     scaleDown:
-      stabilizationWindowSeconds: 30
+      stabilizationWindowSeconds: 30 # The stabilization window before scaling down (in seconds)
       policies:
         - type: Pods
           value: 2

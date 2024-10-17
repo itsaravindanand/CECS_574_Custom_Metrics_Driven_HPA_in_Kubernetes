@@ -9,6 +9,10 @@ import java.util.List;
 import java.util.Optional;
 
 public interface TaskRepository  extends JpaRepository<Task, Long>{
+
+    // Method to retrieve a list of tasks based on their status (e.g., READY, IN_PROGRESS, COMPLETED)
     List<Task> findByStatus(TaskStatus status);
+
+    // Method to retrieve the first task that matches a specific status
     Optional<Task> findFirstByStatus(TaskStatus taskStatus);
 }

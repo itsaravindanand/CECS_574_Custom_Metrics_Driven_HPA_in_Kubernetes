@@ -13,8 +13,8 @@ public class Task {
 
     private String name;
 
-    @Enumerated(EnumType.STRING) // To store enum as String in DB
-    private TaskStatus status; // Enum for "ready", "in-progress", "completed"
+    @Enumerated(EnumType.STRING)
+    private TaskStatus status;
 
     private int taskTime;
 

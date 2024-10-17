@@ -1,7 +1,7 @@
 apiVersion: apps/v1
-kind: Deployment
+kind: Deployment # Defines the resource as a Deployment
 metadata:
-  name: orchestrator-deploy
+  name: orchestrator-deploy # The name of the Deployment
 spec:
   replicas: 1
   selector:
@@ -37,12 +37,12 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: orchestrator-service
+  name: orchestrator-service # The name of the Service for Task Management API Calls
   labels:
     app: orchestrator-service
 spec:
   ports:
-    - port: 8080
+    - port: 8080 # Expose port 8080 for external access to the orchestrator application
       targetPort: 8080
   selector:
     app: orchestrator-deploy
@@ -52,12 +52,12 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: orchestrator-metrics
+  name: orchestrator-metrics # The name of the Service for Prometheus metrics
   labels:
     app: orchestrator-deploy
 spec:
   ports:
-    - port: 1234
+    - port: 1234 # Expose port 1234 for Prometheus metrics
       targetPort: 1234
   selector:
     app: orchestrator-deploy

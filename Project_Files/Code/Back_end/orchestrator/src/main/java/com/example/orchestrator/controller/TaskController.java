@@ -21,24 +21,29 @@ import java.util.concurrent.ScheduledFuture;
 @RequestMapping("/tasks")
 public class TaskController {
     private final TaskRepository taskRepository;
+
+    // Initialize a Prometheus HTTP server to expose metrics
     HTTPServer server = new HTTPServer(1234);
+
+    // Prometheus Gauge metric to monitor the queue length
     private static final Gauge queueLengthGauge = Gauge.build()
             .name("queue_length")
             .help("Queue length gauge.")
             .labelNames("namespace", "pod")
             .register();
 
+    // Inject environment variables for namespace and pod name
     @Value("${POD_NAMESPACE:default}")
     private String namespace;
 
     @Value("${POD_NAME:default}")
     private String podName;
 
-    //frequency of updating the metrics
+    // Time interval for updating queue length metrics (default is 30 seconds)
     @Value("${queue_length_check_interval:30000}")
     private long metricCheckInterval;
 
-    //frequency of checking the tasks queue to process task
+    // Time interval for checking task queue for processing (default is 30 seconds)
     @Value("${task_check_interval:30000}")
     private long taskCheckInterval;
 

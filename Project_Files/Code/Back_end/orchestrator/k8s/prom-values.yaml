@@ -1,2 +1,2 @@
 server:
-  configMapOverrideName: server-conf
+  configMapOverrideName: server-conf # Specifies a ConfigMap override for the Prometheus server.
