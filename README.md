@@ -1,5 +1,9 @@
 # CECS_574_Custom_Metrics_Driven_HPA_in_Kubernetes
 
+## Description
+
+This project demonstrates how custom metrics can be used to dynamically scale resources in a Kubernetes environment using the Horizontal Pod Autoscaler (HPA). By leveraging the queue_length metric, the system adjusts the number of replicas based on real-time application workload, allowing for more precise resource scaling. The project implements an orchestrator application, with a ReactJS front end, deployed in Kubernetes and monitored using Prometheus and Prometheus Adapter to provide real-time metric-driven scaling with HPA.
+
 ## Prerequisites
 
 - IntelliJ or Eclipse or Similar to run the Java Spring Boot Application
@@ -196,15 +200,24 @@ npm start
 
 #### Check the custom metric and add tasks to the orchestrator:
 
-![Custom_Metric_and_Add_Task](https://raw.githubusercontent.com/itsaravindanand/CECS_574_Custom_Metrics_Driven_HPA_in_Kubernetes/refs/heads/main/Project_Files/Documentation/Screenshots/Checking_Custom_Metric_and_add_task.png)
+![Custom_Metric_and_Add_Task](https://github.com/itsaravindanand/CECS_574_Custom_Metrics_Driven_HPA_in_Kubernetes/blob/main/Project_Files/Documentation/Screenshots/Checking_Custom_Metric_and_add_task.png)
 
 #### Manage Tasks:
 
-![Bug_Report_Template](https://github.com/itsaravindanand/CECS544_Project_Bughound/blob/main/BugHound_Application/Screenshots/Bug_Report_Template.png)
+![Task_Queue](https://github.com/itsaravindanand/CECS_574_Custom_Metrics_Driven_HPA_in_Kubernetes/blob/main/Project_Files/Documentation/Screenshots/Task_Queue.png)
 
-### HPA Behavior on the changes
+### Kubernetes Logs Screenshots
 
+#### Describe HPA:
 
+The HPA has scaled up and down based on the queue_length value
 
+![Describe_HPA](https://github.com/itsaravindanand/CECS_574_Custom_Metrics_Driven_HPA_in_Kubernetes/blob/main/Project_Files/Documentation/Screenshots/Describe_HPA_Changes.png)
+
+#### Describe Deploy:
+
+The Orchestrator deployment is scaled up and down based on the queue_length value
+
+![Describe_Deploy](https://github.com/itsaravindanand/CECS_574_Custom_Metrics_Driven_HPA_in_Kubernetes/blob/main/Project_Files/Documentation/Screenshots/Describe_Deploy_Changes.png)
 
 
