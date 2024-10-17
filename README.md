@@ -23,7 +23,7 @@ docker run --name mysql-container -e MYSQL_ROOT_PASSWORD=my-secret-pw -e MYSQL_D
 
 ### Step 2: Open the Java Spring Boot Application
 
-Open the application from the repository in your IDE.
+Open the [application](https://drive.google.com/file/d/1B15u2L4KT7uQgXKm9sBk3SDFdcagwKzQ/view?usp=sharing) from the repository in your IDE.
 
 If required, update the Database Connection details in the application.properties file in the resources folder
 
@@ -190,7 +190,7 @@ kubectl describe deploy orchestrator-deploy
 
 ### Step 13: Run the ReactJS Application to add tasks:
 
-Download the react application project and run the application with this command:
+Open the ReactJS [application](https://drive.google.com/file/d/1PfUNVLgk7VA6CG9_qiWlxPChUBR2f-03/view?usp=sharing) project and run the application with this command:
 
 ```bash
 npm start
