@@ -14,7 +14,7 @@
 docker run --name mysql-container -e MYSQL_ROOT_PASSWORD=my-secret-pw -e MYSQL_DATABASE=tdc-test -e MYSQL_USER=tdc-user -e MYSQL_PASSWORD=tdc-pw -p 3307:3306 -d mysql:8-oracle
 ```
 
-4. **Update the database connection details** in `src/main/resources/application.properties` if required:
+5. **Update the database connection details** in `src/main/resources/application.properties` if required:
 
     ```properties
     spring.datasource.url=jdbc:mysql://host.docker.internal:3307/tdc-test
@@ -22,7 +22,7 @@ docker run --name mysql-container -e MYSQL_ROOT_PASSWORD=my-secret-pw -e MYSQL_D
     spring.datasource.password=tdc-pw
     ```
 
-5. **Run Maven clean install** to generate the JAR file:
+6. **Run Maven clean install** to generate the JAR file:
 
     ```bash
     mvn clean install
